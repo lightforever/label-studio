@@ -933,8 +933,8 @@ def get_data_file(filename):
     if not project.config.get('allow_serving_local_files'):
         raise FileNotFoundError('Serving local files is not allowed. '
                                 'Use "allow_serving_local_files": true config option to enable local serving')
-    directory = request.args.get('d')
-    return flask.send_from_directory(directory, filename, as_attachment=True)
+    folder = os.path.join(project.name, 'data', os.path.dirname(filename))
+    return flask.send_from_directory(folder, filename, as_attachment=True)
 
 
 def str2datetime(timestamp_str):
