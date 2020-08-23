@@ -934,6 +934,7 @@ def get_data_file(filename):
         raise FileNotFoundError('Serving local files is not allowed. '
                                 'Use "allow_serving_local_files": true config option to enable local serving')
     folder = os.path.join(project.name, 'data', os.path.dirname(filename))
+    folder = os.path.abspath(folder)
     return flask.send_from_directory(folder, filename, as_attachment=True)
 
 
