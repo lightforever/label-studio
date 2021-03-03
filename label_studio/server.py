@@ -1,5 +1,7 @@
 import os
 import io
+from os.path import join
+
 import lxml
 import time
 import shutil
@@ -933,9 +935,10 @@ def get_data_file(filename):
     if not project.config.get('allow_serving_local_files'):
         raise FileNotFoundError('Serving local files is not allowed. '
                                 'Use "allow_serving_local_files": true config option to enable local serving')
-    folder = os.path.join(project.name, 'data', os.path.dirname(filename))
-    folder = os.path.abspath(folder)
-    return flask.send_from_directory(folder, filename, as_attachment=True)
+    directory = request.args.get('d')
+    if not directory:
+        directory = join(project.name, 'data')
+    return flask.send_from_directory(directory, filename, as_attachment=True)
 
 
 def str2datetime(timestamp_str):
