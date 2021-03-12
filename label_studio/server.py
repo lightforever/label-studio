@@ -1,6 +1,6 @@
 import os
 import io
-from os.path import join
+from os.path import join, dirname
 
 import lxml
 import time
@@ -937,7 +937,7 @@ def get_data_file(filename):
                                 'Use "allow_serving_local_files": true config option to enable local serving')
     directory = request.args.get('d')
     if not directory:
-        directory = join(project.name, 'data')
+        directory = join(dirname(project.config['label_config']), 'data')
     return flask.send_from_directory(directory, filename, as_attachment=True)
 
 
